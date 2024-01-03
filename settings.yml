@@ -1,0 +1,22 @@
+app_name: "games-library-api"
+
+#  Set the logging levels can be one of:
+#  'WARNING'
+#  'INFO'
+#  'DEBUG'
+#  'CRITICAL'
+#  'ERROR':
+logging:
+  levels:
+    file: 'DEBUG'
+    console: 'DEBUG'
+    werkzeug: 'ERROR'
+  file:
+    path: './logs/log.txt'
+    when: "d"
+    interval: 1
+    backupCount: 5
+
+
+app_debug: "{{ 'True' | env_override('APP_DEBUG') }}"
+environment: "{{ 'development' | env_override('ENVIRONMENT') }}"

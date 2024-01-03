@@ -1,0 +1,113 @@
+---
+openapi: 3.0.1
+info:
+  title: Steam Library API
+  description: API for pulling game data from MongoDB
+  version: '1.0'
+servers:
+- url: /gameslibrary/api/v1
+paths:
+  "/gamesLibrary":
+    get:
+      summary: Get the entire library
+      operationId: get_games_library
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GamesLibrary'
+                x-content-type: application/json
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                detail: The browser (or proxy) sent a request that this server could
+                  not understand.
+                status: 400
+                title: Bad Request
+                type: about:blank
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                detail: The server is is not responding to this request correctly.
+                status: 400
+                title: Bad Request
+                type: about:blank
+  "/gamesLibrary/{game}"
+    get:
+      summary: Get a single game
+      operationId: get_game_single
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+                x-content-type: application/json
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                detail: The browser (or proxy) sent a request that this server could
+                  not understand.
+                status: 400
+                title: Bad Request
+                type: about:blank
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                detail: The server is is not responding to this request correctly.
+                status: 400
+                title: Bad Request
+                type: about:blank
+  "/gamesLibrary/search/{title}"
+  "/gamesLibrary/search/{genre}"
+  "/gamesLibrary/search/{date}"
+  "/gamesLibrary/search/{dateRange}"
+  "/gamesLibrary/search/{publisher}"
+components:
+  schemas:
+    Error:
+      required:
+      - detail
+      - status
+      - title
+      - type
+      type: object
+      properties:
+        detail:
+          type: string
+        status:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+    GamesLibrary:
+      allOf:
+      - type: object
+        properties:
+      - $ref: '#/components/schemas/nodeBody'
+    GameBody:
+      required:
+      - name
+      type: object
+      properties:
+        

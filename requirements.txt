@@ -1,0 +1,7 @@
+certifi
+charset-normalizer
+idna
+python-decouple
+python-steam-api
+requests
+urllib3
