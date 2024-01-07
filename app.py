@@ -8,7 +8,6 @@ import logging
 from distutils.util import strtobool
 
 from modules.settings import Settings
-# from swagger_ui_bundle import swagger_ui_3_24_2_path
 
 def app_specific(connexion_app):
     """ Add additional or initialize specifc app functionality
@@ -17,11 +16,11 @@ def app_specific(connexion_app):
         Returns:
             App (connexion.App): The app
     """
-    if 'nose' not in sys.modules.keys():
-        settings = Settings('settings.yml')
-    else:
-        settings = Settings('test_settings.yml')
-
+    # if 'nose' not in sys.modules.keys():
+    #     settings = Settings('settings.yml')
+    # else:
+    #     settings = Settings('test_settings.yml')
+    settings = Settings('settings.yml')
     connexion_app.app.settings = settings
 
     return connexion_app
@@ -31,14 +30,13 @@ def create_app():
     # Setup the swagger ui console
     # https://github.com/zalando/connexion#the-swagger-ui-console
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    options = {'swagger_path': f"{dir_path}/swagger-ui-3.25.5/dist/"}
+    #options = {'swagger_path': f"{dir_path}/swagger-ui-3.25.5/dist/"}
     # create the app
     app = connexion.App(__name__,
-                        specification_dir='./swagger_server/swagger/',
-                        options=options)
+                        specification_dir='./swagger_server/swagger/')
     # add the api yaml
     app.add_api('swagger.yaml',
-                arguments={'title': 'F5 API'})
+                arguments={'title': 'Games Library API'})
 
     # setup custom json_encoder
     app.app.json_encoder = JSONEncoder
@@ -55,4 +53,4 @@ if __name__ == '__main__':
     debug_val = app.app.settings.app_debug
     if not isinstance(debug_val, bool):
         debug_val = bool(strtobool(str(debug_val)))
-    app.run(host='0.0.0.0', port=8080, threaded=True, debug=debug_val)
+    app.run(host='0.0.0.0', port=8080)

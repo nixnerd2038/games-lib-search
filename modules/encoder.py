@@ -1,6 +1,5 @@
 from connexion.frameworks.flask import FlaskJSONProvider
-from .swagger_codegen.swagger_server.models.base_model import Model
-
+from swagger_server.models.base_model_ import Model
 
 class JSONEncoder(FlaskJSONProvider):
     include_nulls = False
