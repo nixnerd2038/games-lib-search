@@ -28,6 +28,38 @@ paths:
         "500":
           $ref: '#/components/schemas/500InternalServerError'
       x-openapi-router-controller: swagger_server.controllers.games_get
+  /gamesLibrary/{game_name}:
+    get:
+      summary: Get a single game
+      description: Returns the record of a game in the library
+      operationId: get_game
+      parameters:
+      - name: game_name
+        in: path
+        description: The name of a game
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: Hello Kitty Island Adventure
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/game'
+                x-content-type: application/json
+        "400":
+          $ref: '#/components/schemas/400BadRequestError'
+        "404":
+          $ref: '#/components/schemas/404NotFoundError'
+        "500":
+          $ref: '#/components/schemas/500InternalServerError'
+      x-openapi-router-controller: swagger_server.controllers.games_get
 components:
   schemas:
     Error:
@@ -86,4 +118,21 @@ components:
           type: array
           description: Custom tags to add to the record for searching
           readOnly: false
+      example:
+        yearOfPublication: yearOfPublication
+        genre: ""
+        publisher: publisher
+        title: title
+        tags: ""
+  parameters:
+    gameNameParam:
+      name: game_name
+      in: path
+      description: The name of a game
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: Hello Kitty Island Adventure
 
