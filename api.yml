@@ -28,12 +28,12 @@ paths:
         "500":
           $ref: '#/components/schemas/500InternalServerError'
       x-openapi-router-controller: swagger_server.controllers.games_get
-  /gamesLibrary/{game_name}:
+  /gamesLibrary/{title}:
     get:
       summary: Get a single game
       description: Returns the record of a game in the library
       parameters:
-        - $ref: '#/components/parameters/gameNameParam'
+        - $ref: '#/components/parameters/titleParam'
       operationId: get_game
       responses:
         "200":
@@ -149,8 +149,8 @@ components:
           description: Custom tags to add to the record for searching
           readOnly: false
   parameters:
-    gameNameParam:
-      name: game_name
+    titleParam:
+      name: title
       description: The name of a game
       in: path
       required: true
