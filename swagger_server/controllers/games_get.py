@@ -1,5 +1,5 @@
 def get_games_library():
     pass
 
-def get_game():
+def get_game(title):
     pass
