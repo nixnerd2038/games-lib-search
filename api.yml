@@ -52,11 +52,127 @@ paths:
         "500":
           $ref: '#/components/schemas/500InternalServerError'
       x-openapi-router-controller: swagger_server.controllers.games_get
-  # /gamesLibrary/search/{title}:
-  # /gamesLibrary/search/{genre}:
-  # /gamesLibrary/search/{date}":
-  # /gamesLibrary/search/{dateRange}:
-  # /gamesLibrary/search/{publisher}:
+  /gamesLibrary/search/title/{title}:
+    get:
+      summary: Get a single game
+      description: Returns the record of a game in the library
+      parameters:
+        - $ref: '#/components/parameters/titleParam'
+      operationId: search_game_title
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/game'
+                x-content-type: application/json
+        "400":
+          $ref: '#/components/schemas/400BadRequestError'
+        "404":
+          $ref: '#/components/schemas/404NotFoundError'
+        "500":
+          $ref: '#/components/schemas/500InternalServerError'
+      x-openapi-router-controller: swagger_server.controllers.games_search
+  /gamesLibrary/search/{genre}:
+    get:
+      summary: Get a single game
+      description: Returns the record of a game in the library
+      parameters:
+        - $ref: '#/components/parameters/genreParam'
+      operationId: search_game_genre
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/game'
+                x-content-type: application/json
+        "400":
+          $ref: '#/components/schemas/400BadRequestError'
+        "404":
+          $ref: '#/components/schemas/404NotFoundError'
+        "500":
+          $ref: '#/components/schemas/500InternalServerError'
+      x-openapi-router-controller: swagger_server.controllers.games_search
+  /gamesLibrary/search/{date}:
+    get:
+      summary: Get a single game
+      description: Returns the record of a game in the library
+      parameters:
+        - $ref: '#/components/parameters/dateParam'
+      operationId: search_game_date
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/game'
+                x-content-type: application/json
+        "400":
+          $ref: '#/components/schemas/400BadRequestError'
+        "404":
+          $ref: '#/components/schemas/404NotFoundError'
+        "500":
+          $ref: '#/components/schemas/500InternalServerError'
+      x-openapi-router-controller: swagger_server.controllers.games_search
+  /gamesLibrary/search/{dateRange}:
+    get:
+      summary: Get a single game
+      description: Returns the record of a game in the library
+      parameters:
+        - $ref: '#/components/parameters/dateRangeStartParam'
+        - $ref: '#/components/parameters/dateRangeEndParam'
+      operationId: search_game_date_range
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/game'
+                x-content-type: application/json
+        "400":
+          $ref: '#/components/schemas/400BadRequestError'
+        "404":
+          $ref: '#/components/schemas/404NotFoundError'
+        "500":
+          $ref: '#/components/schemas/500InternalServerError'
+      x-openapi-router-controller: swagger_server.controllers.games_search
+  /gamesLibrary/search/{publisher}:
+    get:
+      summary: Get a single game
+      description: Returns the record of a game in the library
+      parameters:
+        - $ref: '#/components/parameters/publisherParam'
+      operationId: search_game_publisher
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/game'
+                x-content-type: application/json
+        "400":
+          $ref: '#/components/schemas/400BadRequestError'
+        "404":
+          $ref: '#/components/schemas/404NotFoundError'
+        "500":
+          $ref: '#/components/schemas/500InternalServerError'
+      x-openapi-router-controller: swagger_server.controllers.games_search
 components:
   schemas:
     Error:
@@ -123,7 +239,10 @@ components:
               type: integer
               description: The total number of games in the library
               readOnly: true
-        - $ref: '#/components/schemas/game'
+            games:
+              type: array
+              properties:
+                $ref: '#/components/schemas/game'
 
     game:
       type: object
@@ -132,12 +251,12 @@ components:
           type: string
           description: The name of the game
           readOnly: true
-        genre:
+        genres:
           type: array
           description: The genres to which the game belongs
           readOnly: true
-        publisher:
-          type: string
+        publishers:
+          type: array
           description: The name of the publisher(s)
           readOnly: true
         yearOfPublication:
@@ -157,3 +276,43 @@ components:
       schema:
         type: string
       example: Hello Kitty Island Adventure
+    genreParam:
+      name: genres
+      description: The genres of a game
+      in: path
+      required: true
+      schema:
+        type: array
+      example: action
+    dateParam:
+      name: date
+      description: The date a game was published
+      in: path
+      required: true
+      schema:
+        type: string
+      example: 1-1-1970
+    dateRangeStartParam:
+      name: dateRangeStart
+      description: The date range a game was published
+      in: path
+      required: true
+      schema:
+        type: string
+      example: '1900'
+    dateRangeEndParam:
+      name: dateRangeEnd
+      description: The date range a game was published
+      in: path
+      required: true
+      schema:
+        type: string
+      example: '1901'
+    publisherParam:
+      name: publisher
+      description: The publisher of a game
+      in: path
+      required: true
+      schema:
+        type: array
+      example: Contoso

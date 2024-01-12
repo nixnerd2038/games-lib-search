@@ -20,3 +20,8 @@ logging:
 
 app_debug: "{{ 'True' | env_override('APP_DEBUG') }}"
 environment: "{{ 'development' | env_override('ENVIRONMENT') }}"
+
+db_server: "{{ '127.0.0.1' | env_override('DB_SERVER') }}"
+db_port: "{{ '27017' | env_override('DB_PORT')}}"
+
+mongo_collection: "{{ 'MyGamesLibrary' | env_override('MONGO_COLLECTION')}}"
