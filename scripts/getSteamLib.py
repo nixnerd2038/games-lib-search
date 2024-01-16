@@ -97,12 +97,23 @@ def load_mongo_db(games_library):
 
 def main():
     owned_games = get_games_library()
+    load_data = []
     game_data = []
     for game in owned_games:
         detailed_info = get_game_info(game['appid'])
         game_data.append(detailed_info)
-        sleep(10)
-    load_mongo_db(game_data)
+        sleep(10)        
+    for game in game_data:
+        try:
+            keys = [x for x in game.keys()]
+            game_data = game[keys[0]]
+            load_data.append(game_data)
+        except KeyError as err:
+            print(f"{err} not found in {game}")
+        except IndexError as err:
+            print(keys)
+            print(game)
+    load_mongo_db(load_data)
 
 if __name__ == '__main__':
     main()

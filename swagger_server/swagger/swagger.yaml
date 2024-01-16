@@ -265,7 +265,8 @@ components:
             readOnly: true
           games:
             type: array
-            properties: {}
+            items:
+              $ref: '#/components/schemas/game'
     game:
       type: object
       properties:

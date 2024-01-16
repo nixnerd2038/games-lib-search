@@ -6,7 +6,9 @@ def remove_html(data):
             data[k] = v
         elif isinstance(v, str):
             try:
-                data[k] = html2text(v.replace('\n', ''))
+                v = html2text(v)
+                v = v.replace('\n', '')
+                data[k] = v
             except KeyError as err:
                 print(f"Error processing data: Key error on {k}")
         elif isinstance(v, list):

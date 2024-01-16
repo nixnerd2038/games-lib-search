@@ -1,4 +1,5 @@
 import pymongo
+from modules.data_transformation import transform_game_to_db
 from modules.mongo_functions import MongoFunctions
 from modules.settings import Settings
 
@@ -13,6 +14,18 @@ def get_games_library():
     """
     raw_data = []
     response = []
+    mongo_conn = MongoFunctions()
+    lib = mongo_conn.find_all('MyGameLibrary')
+
+    for game in lib:
+        datamodel = transform_game_to_db(game)
+        response.append(datamodel)
+        print(f"Key not found {err}")
+    return response
+
+def get_game(title):
+    mongo_conn = MongoFunctions()
+    response = mongo_conn.find_one('MyGameLibrary', {'data.name': title})
     datamodel = {
         "title": '',
         "genres": [],
@@ -20,24 +33,8 @@ def get_games_library():
         "year_of_publication": '',
         'tags': []
     }
-    mongo_conn = MongoFunctions()
-    lib = mongo_conn.find_all('MyGameLibrary')
-    for game in lib:
-        keys = [x for x in game.keys()]
-        game_data = game[keys[1]]
-        raw_data.append(game_data)
-    for entry in raw_data:
-        try:
-            # TODO: Fix swagger dm 
-            
-            datamodel['title'] = entry['data']['name']
-            datamodel['genres'] = entry['data']['genres']
-            datamodel['publishers'] = entry['data']['publishers'] + entry['data']['developers']
-            datamodel['year_of_publication'] = entry['data']['release_date']
-        except KeyError as err:
-            print(f"Key not found {err}")
-        response.append(datamodel)
-    return response
-
-def get_game(title):
-    pass
+    datamodel['title'] = response['data']['name']
+    datamodel['genres'] = [x['description'] for x in response['data']['genres']]
+    datamodel['publishers'] = response['data']['publishers']
+    datamodel['year_of_publication'] = response['data']['release_date']['date']
+    return datamodel
