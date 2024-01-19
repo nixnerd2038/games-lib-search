@@ -22,7 +22,7 @@ class MongoFunctions:
         response = self.steam_db[collection].delete_one(document)
         return response
     
-    def find_all(self, collection):
+    def find_all(self, collection, search_query=None):
         response = []
         for _ in self.steam_db[collection].find():
             response.append(_)

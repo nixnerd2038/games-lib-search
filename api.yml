@@ -52,13 +52,37 @@ paths:
         "500":
           $ref: '#/components/schemas/500InternalServerError'
       x-openapi-router-controller: swagger_server.controllers.games_get
-  /gamesLibrary/search/title/{title}:
+  # /gamesLibrary/search/{title}:
+  #   get:
+  #     summary: Get a single game
+  #     description: Returns the record of a game in the library
+  #     parameters:
+  #       - $ref: '#/components/parameters/titleParam'
+  #     operationId: search_game_title
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/game'
+  #               x-content-type: application/json
+  #       "400":
+  #         $ref: '#/components/schemas/400BadRequestError'
+  #       "404":
+  #         $ref: '#/components/schemas/404NotFoundError'
+  #       "500":
+  #         $ref: '#/components/schemas/500InternalServerError'
+  #     x-openapi-router-controller: swagger_server.controllers.games_search
+  /gamesLibrary/search/{genres}:
     get:
       summary: Get a single game
       description: Returns the record of a game in the library
       parameters:
-        - $ref: '#/components/parameters/titleParam'
-      operationId: search_game_title
+        - $ref: '#/components/parameters/genresParam'
+      operationId: search_game_genres
       responses:
         "200":
           description: Success
@@ -76,103 +100,79 @@ paths:
         "500":
           $ref: '#/components/schemas/500InternalServerError'
       x-openapi-router-controller: swagger_server.controllers.games_search
-  /gamesLibrary/search/{genre}:
-    get:
-      summary: Get a single game
-      description: Returns the record of a game in the library
-      parameters:
-        - $ref: '#/components/parameters/genreParam'
-      operationId: search_game_genre
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/game'
-                x-content-type: application/json
-        "400":
-          $ref: '#/components/schemas/400BadRequestError'
-        "404":
-          $ref: '#/components/schemas/404NotFoundError'
-        "500":
-          $ref: '#/components/schemas/500InternalServerError'
-      x-openapi-router-controller: swagger_server.controllers.games_search
-  /gamesLibrary/search/{date}:
-    get:
-      summary: Get a single game
-      description: Returns the record of a game in the library
-      parameters:
-        - $ref: '#/components/parameters/dateParam'
-      operationId: search_game_date
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/game'
-                x-content-type: application/json
-        "400":
-          $ref: '#/components/schemas/400BadRequestError'
-        "404":
-          $ref: '#/components/schemas/404NotFoundError'
-        "500":
-          $ref: '#/components/schemas/500InternalServerError'
-      x-openapi-router-controller: swagger_server.controllers.games_search
-  /gamesLibrary/search/{dateRange}:
-    get:
-      summary: Get a single game
-      description: Returns the record of a game in the library
-      parameters:
-        - $ref: '#/components/parameters/dateRangeStartParam'
-        - $ref: '#/components/parameters/dateRangeEndParam'
-      operationId: search_game_date_range
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/game'
-                x-content-type: application/json
-        "400":
-          $ref: '#/components/schemas/400BadRequestError'
-        "404":
-          $ref: '#/components/schemas/404NotFoundError'
-        "500":
-          $ref: '#/components/schemas/500InternalServerError'
-      x-openapi-router-controller: swagger_server.controllers.games_search
-  /gamesLibrary/search/{publisher}:
-    get:
-      summary: Get a single game
-      description: Returns the record of a game in the library
-      parameters:
-        - $ref: '#/components/parameters/publisherParam'
-      operationId: search_game_publisher
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/game'
-                x-content-type: application/json
-        "400":
-          $ref: '#/components/schemas/400BadRequestError'
-        "404":
-          $ref: '#/components/schemas/404NotFoundError'
-        "500":
-          $ref: '#/components/schemas/500InternalServerError'
-      x-openapi-router-controller: swagger_server.controllers.games_search
+  # /gamesLibrary/search/{date}:
+  #   get:
+  #     summary: Get a single game
+  #     description: Returns the record of a game in the library
+  #     parameters:
+  #       - $ref: '#/components/parameters/dateParam'
+  #     operationId: search_game_date
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/game'
+  #               x-content-type: application/json
+  #       "400":
+  #         $ref: '#/components/schemas/400BadRequestError'
+  #       "404":
+  #         $ref: '#/components/schemas/404NotFoundError'
+  #       "500":
+  #         $ref: '#/components/schemas/500InternalServerError'
+  #     x-openapi-router-controller: swagger_server.controllers.games_search
+  # /gamesLibrary/search/{dateRange}:
+  #   get:
+  #     summary: Get a single game
+  #     description: Returns the record of a game in the library
+  #     parameters:
+  #       - $ref: '#/components/parameters/dateRangeStartParam'
+  #       - $ref: '#/components/parameters/dateRangeEndParam'
+  #     operationId: search_game_date_range
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/game'
+  #               x-content-type: application/json
+  #       "400":
+  #         $ref: '#/components/schemas/400BadRequestError'
+  #       "404":
+  #         $ref: '#/components/schemas/404NotFoundError'
+  #       "500":
+  #         $ref: '#/components/schemas/500InternalServerError'
+  #     x-openapi-router-controller: swagger_server.controllers.games_search
+  # /gamesLibrary/search/{publisher}:
+  #   get:
+  #     summary: Get a single game
+  #     description: Returns the record of a game in the library
+  #     parameters:
+  #       - $ref: '#/components/parameters/publisherParam'
+  #     operationId: search_game_publisher
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 $ref: '#/components/schemas/game'
+  #               x-content-type: application/json
+  #       "400":
+  #         $ref: '#/components/schemas/400BadRequestError'
+  #       "404":
+  #         $ref: '#/components/schemas/404NotFoundError'
+  #       "500":
+  #         $ref: '#/components/schemas/500InternalServerError'
+  #     x-openapi-router-controller: swagger_server.controllers.games_search
 components:
   schemas:
     Error:
@@ -210,7 +210,7 @@ components:
             $ref: '#/components/schemas/Error'
           example:
             detail: The browser (or proxy) sent a request that this server could not understand.
-            status: 400
+            status: 404
             title: Bad Request
             type: about:blank
     500InternalServerError:
@@ -276,13 +276,15 @@ components:
       schema:
         type: string
       example: Hello Kitty Island Adventure
-    genreParam:
+    genresParam:
       name: genres
       description: The genres of a game
       in: path
       required: true
       schema:
         type: array
+        items:
+          type: string
       example: action
     dateParam:
       name: date
