@@ -8,6 +8,7 @@ import json
 import requests
 import os
 from html2text import html2text
+from modules.convert_date import convert_date_to_iso
 from modules.remove_html_parser import remove_html
 from pymongo import MongoClient
 from time import sleep
@@ -107,6 +108,8 @@ def main():
         try:
             keys = [x for x in game.keys()]
             game_data = game[keys[0]]
+            try:
+                game['data']['release_date']['date'] = convert_date_to_iso(game['data']['release_date']['date'])
             load_data.append(game_data)
         except KeyError as err:
             print(f"{err} not found in {game}")

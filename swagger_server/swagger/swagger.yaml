@@ -60,23 +60,21 @@ paths:
         "500":
           $ref: '#/components/schemas/500InternalServerError'
       x-openapi-router-controller: swagger_server.controllers.games_get
-  /gamesLibrary/search/{genres}:
+  /gamesLibrary/search/:
     get:
       summary: Get a single game
       description: Returns the record of a game in the library
-      operationId: search_game_genres
+      operationId: search_game_year
       parameters:
-      - name: genres
-        in: path
-        description: The genres of a game
-        required: true
-        style: simple
-        explode: false
+      - name: year
+        in: query
+        description: The date a game was published
+        required: false
+        style: form
+        explode: true
         schema:
-          type: array
-          items:
-            type: string
-        example: action
+          type: string
+        example: "1970"
       responses:
         "200":
           description: Success
@@ -174,26 +172,26 @@ components:
       example: Hello Kitty Island Adventure
     genresParam:
       name: genres
-      in: path
+      in: query
       description: The genres of a game
-      required: true
-      style: simple
-      explode: false
+      required: false
+      style: form
+      explode: true
       schema:
         type: array
         items:
           type: string
-      example: action
-    dateParam:
-      name: date
-      in: path
+      example: Action
+    yearParam:
+      name: year
+      in: query
       description: The date a game was published
-      required: true
-      style: simple
-      explode: false
+      required: false
+      style: form
+      explode: true
       schema:
         type: string
-      example: 1-1-1970
+      example: "1970"
     dateRangeStartParam:
       name: dateRangeStart
       in: path

@@ -24,7 +24,7 @@ class MongoFunctions:
     
     def find_all(self, collection, search_query=None):
         response = []
-        for _ in self.steam_db[collection].find():
+        for _ in self.steam_db[collection].find(search_query):
             response.append(_)
         return response
 
